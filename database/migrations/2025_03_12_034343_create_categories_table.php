@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('name'); // add name column example: 'PHP', 'JavaScript', 'Python'
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
