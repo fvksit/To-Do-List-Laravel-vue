@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskLogRequest;
+use App\Http\Resources\TaskLogResource;
 use App\Models\TaskLog;
-use Illuminate\Http\Request;
 
 class TaskLogController extends Controller
 {
@@ -12,7 +14,8 @@ class TaskLogController extends Controller
      */
     public function index()
     {
-        //
+        $taskLogs = TaskLog::all();
+        return TaskLogResource::collection($taskLogs);
     }
 
     /**
@@ -26,9 +29,13 @@ class TaskLogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskLogRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $taskLog = TaskLog::create($validated);
+
+        return new TaskLogResource($taskLog);
     }
 
     /**
@@ -36,7 +43,7 @@ class TaskLogController extends Controller
      */
     public function show(TaskLog $taskLog)
     {
-        //
+        return new TaskLogResource($taskLog);
     }
 
     /**
@@ -50,9 +57,13 @@ class TaskLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskLog $taskLog)
+    public function update(TaskLogRequest $request, TaskLog $taskLog)
     {
-        //
+        $validated = $request->validated();
+
+        $taskLog->update($validated);
+
+        return new TaskLogResource($taskLog);
     }
 
     /**
@@ -60,6 +71,8 @@ class TaskLogController extends Controller
      */
     public function destroy(TaskLog $taskLog)
     {
-        //
+        $taskLog->delete();
+
+        return response()->json(['message' => 'Task log deleted successfully']);
     }
 }

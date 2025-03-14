@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentRequest;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -12,7 +14,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        return CommentResource::collection($comments);
     }
 
     /**
@@ -26,9 +29,13 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $comment = Comment::create($validated);
+
+        return new CommentResource($comment);
     }
 
     /**
@@ -36,7 +43,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        return new CommentResource($comment);
     }
 
     /**
@@ -50,9 +57,13 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentRequest $request, Comment $comment)
     {
-        //
+        $validated = $request->validated();
+
+        $comment->update($validated);
+
+        return new CommentResource($comment);
     }
 
     /**
@@ -60,6 +71,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return response()->json(['message' => 'Comment deleted successfully']);
     }
 }

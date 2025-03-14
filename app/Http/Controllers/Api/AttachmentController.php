@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\AttachmentRequest;
+use App\Http\Resources\AttachmentResource;
 use App\Models\Attachment;
-use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
 {
@@ -12,7 +14,8 @@ class AttachmentController extends Controller
      */
     public function index()
     {
-        //
+        $attachments = Attachment::all();
+        return AttachmentResource::collection($attachments);
     }
 
     /**
@@ -26,9 +29,13 @@ class AttachmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AttachmentRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $attachment = Attachment::create($validated);
+
+        return new AttachmentResource($attachment);
     }
 
     /**
@@ -36,7 +43,7 @@ class AttachmentController extends Controller
      */
     public function show(Attachment $attachment)
     {
-        //
+        return new AttachmentResource($attachment);
     }
 
     /**
@@ -50,9 +57,13 @@ class AttachmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Attachment $attachment)
+    public function update(AttachmentRequest $request, Attachment $attachment)
     {
-        //
+        $validated = $request->validated();
+
+        $attachment->update($validated);
+
+        return new AttachmentResource($attachment);
     }
 
     /**
@@ -60,6 +71,7 @@ class AttachmentController extends Controller
      */
     public function destroy(Attachment $attachment)
     {
-        //
+        $attachment->delete();
+        return response()->json(['message' => 'Attachment deleted successfully']);
     }
 }

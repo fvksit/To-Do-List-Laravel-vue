@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskRequest;
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -12,7 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+        return TaskResource::collection($tasks);
     }
 
     /**
@@ -26,9 +29,13 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $task = Task::create($validated);
+
+        return new TaskResource($task);
     }
 
     /**
@@ -36,7 +43,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return new TaskResource($task);
     }
 
     /**
@@ -50,9 +57,13 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        $validated = $request->validated();
+
+        $task->update($validated);
+
+        return new TaskResource($task);
     }
 
     /**
@@ -60,6 +71,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted successfully']);
     }
 }

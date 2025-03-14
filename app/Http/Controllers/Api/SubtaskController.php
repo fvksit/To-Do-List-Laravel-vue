@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SubtaskRequest;
+use App\Http\Resources\SubtaskResource;
 use App\Models\Subtask;
-use Illuminate\Http\Request;
+
+;
 
 class SubtaskController extends Controller
 {
@@ -12,7 +16,8 @@ class SubtaskController extends Controller
      */
     public function index()
     {
-        //
+        $subtasks = Subtask::all();
+        return SubtaskResource::collection($subtasks);
     }
 
     /**
@@ -26,9 +31,13 @@ class SubtaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SubTaskRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $subtask = Subtask::create($validated);
+
+        return new SubtaskResource($subtask);
     }
 
     /**
@@ -36,7 +45,7 @@ class SubtaskController extends Controller
      */
     public function show(Subtask $subtask)
     {
-        //
+        return new SubtaskResource($subtask);
     }
 
     /**
@@ -50,9 +59,13 @@ class SubtaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subtask $subtask)
+    public function update(SubTaskRequest $request, Subtask $subtask)
     {
-        //
+        $validated = $request->validated();
+
+        $subtask->update($validated);
+
+        return new SubtaskResource($subtask);
     }
 
     /**
@@ -60,6 +73,8 @@ class SubtaskController extends Controller
      */
     public function destroy(Subtask $subtask)
     {
-        //
+        $subtask->delete();
+
+        return response()->json(['message' => 'Subtask deleted successfully']);
     }
 }

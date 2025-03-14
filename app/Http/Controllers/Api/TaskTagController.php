@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskTagRequest;
+use App\Http\Resources\TaskTagResource;
 use App\Models\TaskTag;
-use Illuminate\Http\Request;
 
 class TaskTagController extends Controller
 {
@@ -12,7 +14,8 @@ class TaskTagController extends Controller
      */
     public function index()
     {
-        //
+        $taskTags = TaskTag::all();
+        return TaskTagResource::collection($taskTags);
     }
 
     /**
@@ -26,9 +29,13 @@ class TaskTagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskTagRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $taskTag = TaskTag::create($validated);
+
+        return new TaskTagResource($taskTag);
     }
 
     /**
@@ -50,9 +57,13 @@ class TaskTagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TaskTag $taskTag)
+    public function update(TaskTagRequest $request, TaskTag $taskTag)
     {
-        //
+        $validated = $request->validated();
+
+        $taskTag->update($validated);
+
+        return new TaskTagResource($taskTag);
     }
 
     /**
@@ -60,6 +71,8 @@ class TaskTagController extends Controller
      */
     public function destroy(TaskTag $taskTag)
     {
-        //
+        $taskTag->delete();
+
+        return response()->json(['message' => 'Task tag deleted successfully']);
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TagRequest;
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
@@ -12,7 +14,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return TagResource::collection($tags);
     }
 
     /**
@@ -26,9 +29,13 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $tag = Tag::create($validated);
+
+        return new TagResource($tag);
     }
 
     /**
@@ -36,7 +43,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        return new TagResource($tag);
     }
 
     /**
@@ -50,9 +57,13 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
-        //
+        $validated = $request->validated();
+
+        $tag->update($validated);
+
+        return new TagResource($tag);
     }
 
     /**
@@ -60,6 +71,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+
+        return response()->json(['message' => 'Tag deleted successfully']);
     }
 }

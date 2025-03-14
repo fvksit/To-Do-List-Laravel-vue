@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ReminderRequest;
+use App\Http\Resources\ReminderResource;
 use App\Models\Reminder;
-use Illuminate\Http\Request;
 
 class ReminderController extends Controller
 {
@@ -12,7 +14,8 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        //
+        $reminders = Reminder::all();
+        return response()->json($reminders);
     }
 
     /**
@@ -26,9 +29,13 @@ class ReminderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReminderRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $reminder = Reminder::create($validated);
+
+        return new ReminderResource($reminder);
     }
 
     /**
@@ -36,7 +43,7 @@ class ReminderController extends Controller
      */
     public function show(Reminder $reminder)
     {
-        //
+        return new ReminderResource($reminder);
     }
 
     /**
@@ -50,9 +57,13 @@ class ReminderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reminder $reminder)
+    public function update(ReminderRequest $request, Reminder $reminder)
     {
-        //
+        $validated = $request->validated();
+
+        $reminder->update($validated);
+
+        return new ReminderResource($reminder);
     }
 
     /**
@@ -60,6 +71,8 @@ class ReminderController extends Controller
      */
     public function destroy(Reminder $reminder)
     {
-        //
+        $reminder->delete();
+
+        return response()->json(['message' => 'Reminder deleted successfully']);
     }
 }
