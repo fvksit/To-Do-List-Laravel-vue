@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
+use App\Models\TaskDeadline;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class TaskDeadlineSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,10 +16,11 @@ class CategorySeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 5) as $index) {
-            Category::create([
-                'category_name' => $faker->word,
-                'description' => $faker->sentence,
+        foreach (range(1, 20) as $index) {
+            TaskDeadline::create([
+                'task_id' => $faker->numberBetween(1, 20),
+                'deadline_time' => $faker->dateTimeThisYear,
+                'reminder_sent' => $faker->boolean,
                 'created_at' => now(),
             ]);
         }

@@ -10,10 +10,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->string('file_name');
+            $table->string('file_path');
+            $table->foreignId('uploaded_by')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +26,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('attachments');
     }
 };

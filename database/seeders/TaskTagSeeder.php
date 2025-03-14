@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
+use App\Models\TaskTag;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class TaskTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,11 +16,10 @@ class CategorySeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 5) as $index) {
-            Category::create([
-                'category_name' => $faker->word,
-                'description' => $faker->sentence,
-                'created_at' => now(),
+        foreach (range(1, 30) as $index) {
+            TaskTag::create([
+                'task_id' => $faker->numberBetween(1, 20),
+                'tag_id' => $faker->numberBetween(1, 5),
             ]);
         }
     }

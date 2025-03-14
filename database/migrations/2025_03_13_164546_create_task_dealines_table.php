@@ -10,10 +10,11 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('task_deadlines', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->dateTime('deadline_time');
+            $table->boolean('reminder_sent')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +25,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('task_dealines');
     }
 };

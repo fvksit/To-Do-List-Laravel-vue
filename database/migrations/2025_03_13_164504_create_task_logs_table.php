@@ -10,12 +10,15 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('task_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->enum('status_from', ['belum selesai', 'selesai', 'ditunda']);
+            $table->enum('status_to', ['belum selesai', 'selesai', 'ditunda']);
+            $table->foreignId('changed_by')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
+            $table->text('comment')->nullable();
         });
     }
 
@@ -24,6 +27,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('task_logs');
     }
 };

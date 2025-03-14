@@ -10,10 +10,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('activity_feeds', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->string('activity_type');
+            $table->text('activity_description');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +26,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('activity_feeds');
     }
 };

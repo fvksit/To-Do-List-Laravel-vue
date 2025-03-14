@@ -10,10 +10,11 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('reminders', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('task_id')->constrained('tasks');
+            $table->dateTime('reminder_time');
+            $table->string('reminder_type');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -24,6 +25,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('reminders');
     }
 };

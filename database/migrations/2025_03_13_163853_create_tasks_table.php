@@ -10,15 +10,17 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('todos', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->boolean('completed')->default(false);
-            $table->date('due_date');
+            $table->dateTime('due_date');
+            $table->enum('status', ['belum selesai', 'selesai', 'ditunda']);
+            $table->enum('priority', ['rendah', 'sedang', 'tinggi']);
             $table->timestamps();
             $table->softDeletes();
+            $table->foreignId('assigned_to')->constrained('users');
+            $table->foreignId('created_by')->constrained('users');
         });
     }
 
@@ -27,6 +29,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('todos');
+        Schema::dropIfExists('tasks');
     }
 };

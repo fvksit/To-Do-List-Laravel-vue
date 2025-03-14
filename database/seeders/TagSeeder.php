@@ -3,11 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
+use App\Models\Tag;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
-class CategorySeeder extends Seeder
+class TagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,9 +17,8 @@ class CategorySeeder extends Seeder
         $faker = Faker::create();
 
         foreach (range(1, 5) as $index) {
-            Category::create([
-                'category_name' => $faker->word,
-                'description' => $faker->sentence,
+            Tag::create([
+                'tag_name' => $faker->word,
                 'created_at' => now(),
             ]);
         }

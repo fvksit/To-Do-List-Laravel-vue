@@ -10,12 +10,12 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('task_trackings', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('description')->nullable();
+            $table->foreignId('todo_id')->constrained()->onDelete('cascade');
+            $table->date('date');
+            $table->string('status');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -24,6 +24,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('task_trackings');
     }
 };
