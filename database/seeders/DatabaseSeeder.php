@@ -15,20 +15,20 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            AttachmentSeeder::class,
-            ActivityFeedSeeder::class,
             CategorySeeder::class,
+            TagSeeder::class,
+            TaskSeeder::class,
+            SubtaskSeeder::class,
+            TaskCategorySeeder::class,
+            TaskTagSeeder::class,
+            TaskAssignmentSeeder::class,
+            TaskDeadlineSeeder::class,
+            ReminderSeeder::class,
             CommentSeeder::class,
             NotificationSeeder::class,
-            ReminderSeeder::class,
-            SubtaskSeeder::class,
-            TagSeeder::class,
-            TaskAssignmentSeeder::class,
-            TaskCategorySeeder::class,
-            TaskDeadlineSeeder::class,
             TaskLogSeeder::class,
-            TaskSeeder::class,
-            TaskTagSeeder::class,
+            AttachmentSeeder::class,
+            ActivityFeedSeeder::class,
         ]);
     }
 }

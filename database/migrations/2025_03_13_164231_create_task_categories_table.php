@@ -14,7 +14,6 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('task_id')->constrained('tasks');
             $table->foreignId('category_id')->constrained('categories');
-            $table->primary(['task_id', 'category_id']);
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->enum('status_from', ['belum selesai', 'selesai', 'ditunda']);
             $table->enum('status_to', ['belum selesai', 'selesai', 'ditunda']);
             $table->foreignId('changed_by')->constrained('users');
+            $table->timestamp('changed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->text('comment')->nullable();
