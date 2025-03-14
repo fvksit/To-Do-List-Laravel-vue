@@ -102,12 +102,10 @@ Follow the steps below to run both the **backend (Laravel)** and **frontend (Vue
 ### Penjelasan:
 
 1. **Running the Application**:
+
     - Memberikan instruksi langkah demi langkah untuk menjalankan aplikasi backend (Laravel) dan frontend (Vue.js).
-2. **Commenting on Important Code**:
 
-    - Menyediakan contoh bagaimana menambahkan komentar di bagian kode yang penting untuk meningkatkan pemahaman dan dokumentasi internal.
-
-3. **API Documentation (Postman Collection)**:
+2. **API Documentation (Postman Collection)**:
     - Menyediakan instruksi tentang bagaimana menggunakan **Postman** untuk menguji dan mendokumentasikan API. Ini mencakup langkah-langkah untuk **mengimpor koleksi Postman** dan **menggunakan API**.
 
 Dengan menggunakan **Postman Collection** sebagai dokumentasi API, Anda mempermudah pengembang lain untuk melakukan pengujian terhadap API dan memahami bagaimana API bekerja.
