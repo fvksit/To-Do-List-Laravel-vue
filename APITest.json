@@ -1,0 +1,57 @@
+{
+    "info": {
+        "name": "Task Management API",
+        "description": "Collection for Task Management API endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get All Tasks",
+            "request": {
+                "method": "GET",
+                "url": "http://localhost:8000/api/v1/tasks"
+            },
+            "response": []
+        },
+        {
+            "name": "Create Task",
+            "request": {
+                "method": "POST",
+                "url": "http://localhost:8000/api/v1/tasks",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"title\":\"New Task\",\"description\":\"This is a new task\",\"due_date\":\"2025-03-01T12:00:00\",\"status\":\"belum selesai\",\"priority\":\"sedang\",\"assigned_to\":1,\"created_by\":1}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Task by ID",
+            "request": {
+                "method": "GET",
+                "url": "http://localhost:8000/api/v1/tasks/{id}"
+            },
+            "response": []
+        },
+        {
+            "name": "Update Task",
+            "request": {
+                "method": "PUT",
+                "url": "http://localhost:8000/api/v1/tasks/{id}",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"title\":\"Updated Task\",\"description\":\"This task has been updated\",\"due_date\":\"2025-04-01T12:00:00\",\"status\":\"selesai\",\"priority\":\"tinggi\",\"assigned_to\":2,\"created_by\":1}"
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Task",
+            "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8000/api/v1/tasks/{id}"
+            },
+            "response": []
+        }
+    ]
+}
